@@ -27,11 +27,10 @@ const orgs = [
 const baseURL = 'https://api.github.com';
 const orgsEndpoint = (org) => `/orgs/${org}`;
 const reducer = (accumulator, currentValue) => accumulator + currentValue;
-const TOKEN = 'personal access token';
+const TOKEN = ''; // replace '' with your personal access token
 
-const getSizeForOrg = (orgName) => axios.get(baseURL + orgsEndpoint(orgName), {
-  headers: { Authorization: `token ${TOKEN}` }
-})
+const options = TOKEN.length > 0 ? {headers: { Authorization: `token ${TOKEN}` }} : {}
+const getSizeForOrg = (orgName) => axios.get(baseURL + orgsEndpoint(orgName), options)
   .then((org) => org.data)
   .then((org) => {
     console.log(`${org.login}: ${org.disk_usage} KB`);
